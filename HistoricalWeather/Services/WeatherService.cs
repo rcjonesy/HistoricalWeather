@@ -13,13 +13,20 @@ namespace HistoricalWeather.Services
 
         public async Task<WeatherData> GetCurrentWeatherAsync(string zipCode)
         {
-            var latitude = 36.1627;
-            var longitude = -86.7816;
+            var (latitude, longitude) = await GetCoordinatesFromZipCode(zipCode);
 
-            var url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true";
+            var url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true&temperature_unit=fahrenheit";
 
             var response = await _httpClient.GetFromJsonAsync<WeatherData>(url);
             return response;
+        }
+
+        private async Task<(double latitude, double longitude)> GetCoordinatesFromZipCode(string zipCode)
+        {
+            var url = $"https://geocoding-api.open-meteo.com/v1/search?name={zipCode}&count=1&language=en&format=json";
+            var response = await _httpClient.GetFromJsonAsync<GeocodingResponse>(url);
+
+            return (response.results[0].latitude, response.results[0].longitude);
         }
     }
 }
