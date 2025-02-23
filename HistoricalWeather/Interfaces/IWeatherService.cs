@@ -1,4 +1,6 @@
-﻿namespace HistoricalWeather.Interfaces
+﻿using HistoricalWeather.Models;
+
+namespace HistoricalWeather.Interfaces
 {
     public interface IWeatherService
     {

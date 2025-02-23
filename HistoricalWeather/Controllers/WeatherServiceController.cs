@@ -1,4 +1,5 @@
 using HistoricalWeather.Interfaces;
+using HistoricalWeather.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HistoricalWeather.Controllers;
