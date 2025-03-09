@@ -14,10 +14,17 @@ public class WeatherServiceController : ControllerBase
         _weatherService = WeatherService;
     }
 
-    [HttpGet("{zipCode}")]
+    [HttpGet("current/{zipCode}")]
     public async Task<ActionResult<WeatherData>> GetCurrentWeatherAsync(string zipCode)
     {
-        var weather = await _weatherService.GetCurrentWeatherAsync(zipCode);
-        return Ok(weather);
+        var currentWeather = await _weatherService.GetCurrentWeatherAsync(zipCode);
+        return Ok(currentWeather);
+    }
+
+    [HttpGet("historical/{zipCode}/{startDate}/{endDate}")]
+    public async Task<ActionResult<WeatherData>> GetHistoricalWeatherAsync(string zipCode, DateTime startDate, DateTime endDate)
+    {
+        var historicalWeather = await _weatherService.GetHistoricalWeatherAsync(zipCode, startDate, endDate);
+            return Ok(historicalWeather);
     }
 }
